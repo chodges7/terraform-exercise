@@ -10,7 +10,7 @@ resource "aws_security_group" "christian-bootcamp" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["132.241.174.76/32"]
+    cidr_blocks = ["98.208.42.143/32"]
   }
 
   egress {
@@ -35,7 +35,14 @@ resource "aws_security_group" "christian-http" {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = ["132.241.174.76/32"]
+        cidr_blocks = ["98.208.42.143/32"]
+    }
+
+    ingress {
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["98.208.42.143/32"]
     }
 
     egress {
