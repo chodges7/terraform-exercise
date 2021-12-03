@@ -1,0 +1,9 @@
+# this directory will be re-created when terraform init is run in a new environment.
+.terraform/ 
+
+# these files contain the terraform state specific of a specific environment and do not need to be preserved in a repository.
+terraform.tfstate
+terraform.tfstate.backup
+
+# contain secrets (usernames, password, ip addresses, etc) about a specific environment
+terraform.tfvars
