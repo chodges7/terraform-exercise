@@ -1,5 +1,12 @@
 provider "aws" {
     region = "us-west-1"
+    default_tags {
+        tags = {
+            Owner   = "Christian",
+            Client  = "Internal",
+            Project = "Bootcamp"
+        }
+    }
 }
 
 resource "aws_security_group" "christian-bootcamp" {
@@ -22,8 +29,6 @@ resource "aws_security_group" "christian-bootcamp" {
 
   tags = {
     Name = "christian-bootcamp",
-    Owner = "christian",
-    Client = "Internal",
   }
 }
 
@@ -54,21 +59,21 @@ resource "aws_security_group" "christian-http" {
 
     tags = {
         Name = "christian-bootcamp",
-        Owner = "christian",
-        Client = "Internal",
     }
+}
+
+variable "aws_instance_type" {
+    type = string   
 }
 
 resource "aws_instance" "christian-terraform" {
     ami                     = "ami-054965c6cd7c6e462"
-    instance_type           = "t2.micro"
+    instance_type           = var.aws_instance_type
     key_name                = "christian-keypair"
     vpc_security_group_ids  = [
         aws_security_group.christian-bootcamp.id,
         aws_security_group.christian-http.id]
     tags = {
         Name = "christian-terraform-instance",
-        Client = "Internal",
-        Owner = "Christian"
     }
 }
