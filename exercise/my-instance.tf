@@ -17,7 +17,14 @@ resource "aws_security_group" "christian-bootcamp" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["98.208.42.143/32"]
+        cidr_blocks = [var.personal_ip]
+    }
+
+    ingress {
+        from_port   = 8080
+        to_port     = 8080
+        protocol    = "tcp"
+        cidr_blocks = [var.personal_ip]
     }
 
     egress {
@@ -40,14 +47,14 @@ resource "aws_security_group" "christian-http" {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = ["98.208.42.143/32"]
+        cidr_blocks = [var.personal_ip]
     }
 
     ingress {
         from_port   = 443
         to_port     = 443
         protocol    = "tcp"
-        cidr_blocks = ["98.208.42.143/32"]
+        cidr_blocks = [var.personal_ip]
     }
 
     egress {
@@ -66,6 +73,10 @@ variable "aws_instance_type" {
     type = string  
 }
 
+variable "personal_ip" {
+    type = string
+}
+
 variable "elastic_ip" {}
 
 data "aws_eip" "proxy_ip" {
@@ -78,7 +89,8 @@ resource "aws_eip_association" "proxy_eip" {
 }
 
 resource "aws_instance" "christian-terraform" {
-    ami                     = "ami-054965c6cd7c6e462"
+    ami                     = "ami-083f68207d3376798"
+    # ami                     = "ami-054965c6cd7c6e462"
     instance_type           = var.aws_instance_type
     key_name                = "christian-keypair"
     vpc_security_group_ids  = [
